@@ -92,6 +92,14 @@ export default function App() {
     return () => { clearTimeout(a); clearTimeout(b); };
   }, [phase === 2]);
 
+  useEffect(() => {
+    const el = hero.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(([e]) => el.classList.toggle("off", !e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const tilt = useCallback((e) => {
     if (reduced() || !hero.current) return;
     const b = hero.current.getBoundingClientRect();
@@ -140,7 +148,10 @@ export default function App() {
               <defs><path id="circ" d="M200,200 m-176,0 a176,176 0 1,1 352,0 a176,176 0 1,1 -352,0" /></defs>
               <text><textPath href="#circ">$KRIS ✦ THE KING'S RELIC ✦ MOJOPAHIT ✦ $KRIS ✦ THE KING'S RELIC ✦ MOJOPAHIT ✦</textPath></text>
             </svg>
-            <div className="orb"><img src={relic} alt="Pepe wearing a golden Javanese crown, resting on a golden kris dagger hilt hung with coin chains" width="771" height="811" /></div>
+            <div className="mist" aria-hidden="true"><i /><i /><i /><i /></div>
+            <div className="orb"><img src={relic} alt="Pepe wearing a golden Javanese crown, resting on a golden kris dagger hilt hung with coin chains" width="771" height="811" /><i className="blade" /><i className="sheen" /></div>
+            <div className="smoke" aria-hidden="true">{[0,1,2,3].map((n) => <i key={n} style={{ "--n": n }} />)}</div>
+            <div className="halo" aria-hidden="true" />
             <div className="glow" />
           </div>
         </section>

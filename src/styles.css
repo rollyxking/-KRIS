@@ -79,3 +79,27 @@ footer p{max-width:46rem;margin:0 auto}
 }
 @media (max-width:520px){.nav nav a:not(.btn){display:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.w{opacity:1}}
+
+/* King's blade — slow, cinematic, GPU-cheap (opacity + transform on soft gradients, no blur filters) */
+.mist{position:absolute;inset:-6%;z-index:0;pointer-events:none}
+.mist i{position:absolute;width:62%;height:62%;border-radius:50%;opacity:.25;background:radial-gradient(circle,rgba(226,216,255,.34),rgba(150,130,255,.12) 48%,transparent 70%);animation:mist 20s ease-in-out infinite;will-change:transform,opacity}
+.mist i:nth-child(1){left:-12%;top:6%;--dx:3.2rem;--dy:-1.6rem}
+.mist i:nth-child(2){right:-12%;bottom:4%;--dx:-3rem;--dy:1.4rem;animation-duration:25s;animation-delay:-8s}
+.mist i:nth-child(3){left:18%;bottom:-14%;--dx:2.4rem;--dy:-2rem;animation-duration:29s;animation-delay:-14s}
+.mist i:nth-child(4){right:6%;top:-12%;--dx:-2.6rem;--dy:1.8rem;animation-duration:23s;animation-delay:-4s}
+.blade{position:absolute;left:41%;top:44%;width:16%;height:56%;pointer-events:none;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,rgba(255,226,140,.7),rgba(255,190,70,.22) 45%,transparent 70%);mix-blend-mode:screen;opacity:.2;animation:bladeGlow 6s ease-in-out infinite;will-change:opacity,transform}
+.sheen{position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 42%,rgba(255,244,200,.26) 50%,transparent 58%);transform:translateX(-120%);animation:sheen 9s ease-in-out 3s infinite;will-change:transform}
+.halo{position:absolute;inset:-4%;z-index:-1;pointer-events:none;border-radius:50%;background:radial-gradient(circle,rgba(255,214,102,.28),transparent 66%);opacity:0;transition:opacity .9s ease}
+.glow{animation:halo 6s ease-in-out infinite;will-change:opacity,transform}
+.smoke{position:absolute;left:50%;bottom:5%;width:36%;height:0;pointer-events:none;z-index:2}
+.smoke i{position:absolute;left:calc(var(--n)*20% - 30%);bottom:0;width:4rem;height:4rem;border-radius:50%;background:radial-gradient(circle,rgba(235,228,255,.4),rgba(190,170,255,.12) 55%,transparent 70%);opacity:0;animation:smoke 11s ease-out calc(var(--n)*2.6s) infinite;will-change:transform,opacity}
+.relic:hover .halo{opacity:1}
+.relic:hover .blade{animation-duration:3.6s}
+.relic.off *,.relic.off{animation-play-state:paused}
+@keyframes mist{0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.2}50%{transform:translate3d(var(--dx),var(--dy),0) scale(1.15);opacity:.55}}
+@keyframes bladeGlow{50%{opacity:.6;transform:scaleY(1.05)}}
+@keyframes halo{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes sheen{0%{transform:translateX(-120%)}30%,100%{transform:translateX(120%)}}
+@keyframes smoke{0%{opacity:0;transform:translate3d(0,0,0) scale(.6)}20%{opacity:.5}100%{opacity:0;transform:translate3d(calc((var(--n) - 1.5)*1.6rem),-9rem,0) scale(2)}}
+@media (max-width:520px){.mist i:nth-child(n+3){display:none}.smoke i:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.mist i{opacity:.28}.blade{opacity:.35}.sheen,.smoke{display:none}}
